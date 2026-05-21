@@ -1,0 +1,13 @@
+# Ignore all of .idea folder by default
+**/.idea/*
+
+# Allow some project-specific settings
+!**/.idea/codeStyles/
+!**/.idea/deployment.xml
+!**/.idea/vcs.xml
+!**/.idea/jarRepositories.xml
+!**/.idea/dataSources.xml
+!**/.idea/sqldialects.xml
+!**/.idea/git_toolbox_prj.xml
+!**/.idea/.name
+!**/.idea/libraries-with-intellij-classes.xml

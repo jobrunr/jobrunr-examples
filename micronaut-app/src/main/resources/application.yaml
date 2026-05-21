@@ -1,0 +1,9 @@
+jobrunr:
+  job-scheduler:
+    enabled: true
+  dashboard:
+    enabled: true
+  background-job-server:
+    enabled: true
+  database:
+    type: mem
