@@ -1,6 +1,6 @@
-# JobRunr — Micronaut Example
+# JobRunr — Spring Boot Example
 
-A Micronaut application that demonstrates three core JobRunr background job patterns using the JobRunr Micronaut Integration.
+A Spring Boot application that demonstrates three core JobRunr background job patterns using the JobRunr Spring Boot Starter.
 
 The app models a **newsletter subscription service**:
 
@@ -12,17 +12,17 @@ The app models a **newsletter subscription service**:
 
 ## Requirements
 
-- Java 21+
+- Java 17+
 - Gradle (wrapper included)
 
 ## Project structure
 
 ```
-micronaut-app/
+spring-app/
 ├── src/main/java/org/jobrunr/example/
-│   ├── Application.java                   # Micronaut entry point
+│   ├── SpringAppApplication.java          # Spring Boot entry point
 │   ├── controllers/
-│   │   └── SubscriptionController.java    # HTTP endpoints
+│   │   └── SubscriptionController.java    # REST endpoints
 │   └── services/
 │       └── EmailService.java              # Simulated email jobs (prints to console)
 └── build.gradle
@@ -32,8 +32,8 @@ micronaut-app/
 
 ```bash
 git clone https://github.com/jobrunr/jobrunr-examples.git
-cd jobrunr-examples/micronaut-app
-./gradlew run
+cd jobrunr-examples/spring-app
+./gradlew bootRun
 ```
 
 The server starts on **http://localhost:8080** and the JobRunr dashboard on **http://localhost:8000/dashboard**.
@@ -50,4 +50,4 @@ curl -X POST "http://localhost:8080/confirm?email=you@example.com"
 
 ## How it works
 
-See the [Getting started with Micronaut](https://www.jobrunr.io/en/documentation/getting-started/micronaut/) guide for a full walkthrough of the code.
+See the [Getting started with Spring Boot](https://www.jobrunr.io/en/documentation/getting-started/spring/) guide for a full walkthrough of the code.

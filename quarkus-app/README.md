@@ -1,67 +1,52 @@
-# example
+# JobRunr — Quarkus Example
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+A Quarkus application that demonstrates three core JobRunr background job patterns using the JobRunr Quarkus Extension.
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+The app models a **newsletter subscription service**:
 
-## Running the application in dev mode
+| Endpoint | Pattern | What happens |
+|---|---|---|
+| `POST /subscribe` | Fire-and-forget | Confirmation email sent as soon as a worker is free |
+| `POST /confirm` | Delayed | Welcome email scheduled for execution 3 days later |
+| *(on startup)* | Recurring | Weekly digest sent every Monday via `@Recurring` |
 
-You can run your application in dev mode that enables live coding using:
+## Requirements
 
-```shell script
+- Java 21+
+- Gradle (wrapper included)
+
+## Project structure
+
+```
+quarkus-app/
+├── src/main/java/org/jobrunr/example/
+│   ├── resources/
+│   │   └── SubscriptionResource.java   # JAX-RS endpoints
+│   └── services/
+│       └── EmailService.java           # Simulated email jobs (prints to console)
+└── build.gradle
+```
+
+## Running the app
+
+```bash
+git clone https://github.com/jobrunr/jobrunr-examples.git
+cd jobrunr-examples/quarkus-app
 ./gradlew quarkusDev
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+The server starts on **http://localhost:8080** and the JobRunr dashboard on **http://localhost:8000/dashboard**.
 
-## Packaging and running the application
+## Try it out
 
-The application can be packaged using:
+```bash
+# Fire-and-forget: confirmation email sent immediately
+curl -X POST "http://localhost:8080/subscribe?email=you@example.com"
 
-```shell script
-./gradlew build
+# Delayed: welcome email scheduled 3 days from now
+curl -X POST "http://localhost:8080/confirm?email=you@example.com"
 ```
 
-It produces the `quarkus-run.jar` file in the `build/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `build/quarkus-app/lib/` directory.
+## How it works
 
-The application is now runnable using `java -jar build/quarkus-app/quarkus-run.jar`.
-
-If you want to build an _über-jar_, execute the following command:
-
-```shell script
-./gradlew build -Dquarkus.package.jar.type=uber-jar
-```
-
-The application, packaged as an _über-jar_, is now runnable using `java -jar build/*-runner.jar`.
-
-## Creating a native executable
-
-You can create a native executable using:
-
-```shell script
-./gradlew build -Dquarkus.native.enabled=true
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
-
-```shell script
-./gradlew build -Dquarkus.native.enabled=true -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./build/example-1.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/gradle-tooling>.
-
-## Related Guides
-
-- REST Jackson ([guide](https://quarkus.io/guides/rest#json-serialisation)): Jackson serialization support for Quarkus REST. This extension is not compatible
-  with the quarkus-resteasy extension, or any of the extensions that depend on it
-
-## Provided Code
-
-### REST
-
-Easily start your REST Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+See the [Getting started with Quarkus](https://www.jobrunr.io/en/documentation/getting-started/quarkus/) guide for a full walkthrough of the code.

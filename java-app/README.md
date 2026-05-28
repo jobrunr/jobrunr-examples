@@ -1,6 +1,6 @@
-# JobRunr — Micronaut Example
+# JobRunr — Java Example
 
-A Micronaut application that demonstrates three core JobRunr background job patterns using the JobRunr Micronaut Integration.
+A minimal HTTP server that demonstrates three core JobRunr background job patterns.
 
 The app models a **newsletter subscription service**:
 
@@ -8,23 +8,21 @@ The app models a **newsletter subscription service**:
 |---|---|---|
 | `POST /subscribe` | Fire-and-forget | Confirmation email sent as soon as a worker is free |
 | `POST /confirm` | Delayed | Welcome email scheduled for execution 3 days later |
-| *(on startup)* | Recurring | Weekly digest sent every Monday via `@Recurring` |
+| *(on startup)* | Recurring | Weekly digest sent every Monday |
 
 ## Requirements
 
-- Java 21+
+- Java 25 (uses compact source files)
 - Gradle (wrapper included)
 
 ## Project structure
 
 ```
-micronaut-app/
+java-app/
 ├── src/main/java/org/jobrunr/example/
-│   ├── Application.java                   # Micronaut entry point
-│   ├── controllers/
-│   │   └── SubscriptionController.java    # HTTP endpoints
+│   ├── App.java              # HTTP server entry point + JobRunr setup
 │   └── services/
-│       └── EmailService.java              # Simulated email jobs (prints to console)
+│       └── EmailService.java # Simulated email jobs (prints to console)
 └── build.gradle
 ```
 
@@ -32,7 +30,7 @@ micronaut-app/
 
 ```bash
 git clone https://github.com/jobrunr/jobrunr-examples.git
-cd jobrunr-examples/micronaut-app
+cd jobrunr-examples/java-app
 ./gradlew run
 ```
 
@@ -50,4 +48,4 @@ curl -X POST "http://localhost:8080/confirm?email=you@example.com"
 
 ## How it works
 
-See the [Getting started with Micronaut](https://www.jobrunr.io/en/documentation/getting-started/micronaut/) guide for a full walkthrough of the code.
+See the [Getting started with Java](https://www.jobrunr.io/en/documentation/getting-started/java/) guide for a full walkthrough of the code.
