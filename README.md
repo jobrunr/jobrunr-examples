@@ -10,7 +10,7 @@ Example projects showing how to integrate [JobRunr](https://www.jobrunr.io) back
 - [quarkus-app](quarkus-app/) — Quarkus
 - [micronaut-app](micronaut-app/) — Micronaut
 
-See each project's README for setup instructions and endpoint details.
+See each project's README for setup instructions.
 
 ## Further reading
 
