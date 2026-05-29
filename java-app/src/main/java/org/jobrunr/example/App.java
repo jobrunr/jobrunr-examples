@@ -4,16 +4,20 @@ import org.jobrunr.configuration.JobRunr;
 import org.jobrunr.example.services.EmailService;
 import org.jobrunr.scheduling.BackgroundJob;
 import org.jobrunr.scheduling.cron.Cron;
-import org.jobrunr.server.BackgroundJobServerConfiguration;
 import org.jobrunr.storage.InMemoryStorageProvider;
-import org.jobrunr.utils.StringUtils;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.time.DayOfWeek;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 void main() throws Exception {
     var emailService = new EmailService();
 
     JobRunr.configure() // Using JobRunr Pro? Replace `JobRunr` by `JobRunrPro`
             .useStorageProvider(new InMemoryStorageProvider())
-            .useBackgroundJobServer(BackgroundJobServerConfiguration.usingStandardBackgroundJobServerConfiguration().andWorkerCount(10))
+            .useBackgroundJobServer()
             .useDashboard()
             .initialize();
 
@@ -47,9 +51,12 @@ void main() throws Exception {
 }
 
 String getEmailFromQueryParams(HttpExchange ex) {
-    var q = ex.getRequestURI().getQuery();
-    var value = q == null ? null : StringUtils.substringAfter(q, "email=");
-    return StringUtils.isNotNullOrEmpty(value) ? value : null;
+    var query = ex.getRequestURI().getQuery();
+    if (query == null) return null;
+    for (var param : query.split("&")) {
+        if (param.startsWith("email=")) return param.substring(6);
+    }
+    return null;
 }
 
 void respond(HttpExchange ex, int status, String body) throws IOException {
