@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'io.quarkus' version "3.35.3"
+    id 'io.quarkus' version "3.38.0"
 }
 
 repositories {
@@ -9,11 +9,10 @@ repositories {
 }
 
 dependencies {
-    implementation platform('io.quarkus:quarkus-bom:3.35.3')
+    implementation platform('io.quarkus:quarkus-bom:3.38.0')
     implementation 'io.quarkus:quarkus-rest-jackson'
     implementation 'io.quarkus:quarkus-arc'
-    implementation 'io.quarkus:quarkus-smallrye-health'
-    implementation 'org.jobrunr:quarkus-jobrunr:8.6.0'
+    implementation 'org.jobrunr:quarkus-jobrunr:8.8.0'
     testImplementation 'io.quarkus:quarkus-junit'
     testImplementation 'io.rest-assured:rest-assured'
 }

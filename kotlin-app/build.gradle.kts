@@ -11,10 +11,10 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jobrunr:jobrunr:8.6.0")
-    implementation("org.jobrunr:jobrunr-kotlin-support:8.6.0")
+    implementation("org.jobrunr:jobrunr:8.8.0")
+    implementation("org.jobrunr:jobrunr-kotlin-support:8.8.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
-    implementation("ch.qos.logback:logback-classic:1.5.32")
+    implementation("ch.qos.logback:logback-classic:1.6.1")
 }
 
 kotlin {
