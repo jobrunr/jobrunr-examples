@@ -1,6 +1,6 @@
 plugins {
     id("io.micronaut.application") version "5.0.2"
-    id("com.gradleup.shadow") version "9.3.2"
+    id("com.gradleup.shadow") version "9.6.1"
     id("io.micronaut.aot") version "5.0.2"
 }
 
@@ -15,10 +15,10 @@ repositories {
 
 dependencies {
     annotationProcessor("io.micronaut:micronaut-http-validation")
-    annotationProcessor("org.jobrunr:jobrunr-micronaut-annotations:8.8.0")
+    annotationProcessor("org.jobrunr:jobrunr-micronaut-annotations:9.0.0")
 
     implementation("io.micronaut:micronaut-jackson-databind")
-    implementation("org.jobrunr:jobrunr-micronaut-feature:8.8.0")
+    implementation("org.jobrunr:jobrunr-micronaut-feature:9.0.0")
 
     compileOnly("io.micronaut:micronaut-http-client")
 

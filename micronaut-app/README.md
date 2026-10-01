@@ -12,7 +12,7 @@ The app models a **newsletter subscription service**:
 
 ## Requirements
 
-- Java 21+
+- Java 25+
 - Gradle (wrapper included)
 
 ## Project structure
