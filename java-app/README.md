@@ -23,6 +23,10 @@ java-app/
 │   ├── App.java              # HTTP server entry point + JobRunr setup
 │   └── services/
 │       └── EmailService.java # Simulated email jobs (prints to console)
+├── src/test/java/org/jobrunr/example/
+│   ├── AppTest.java          # Startup, /subscribe and /confirm behavior
+│   └── services/
+│       └── EmailServiceTest.java
 └── build.gradle
 ```
 
@@ -45,6 +49,14 @@ curl -X POST "http://localhost:8080/subscribe?email=you@example.com"
 # Delayed: welcome email scheduled 3 days from now
 curl -X POST "http://localhost:8080/confirm?email=you@example.com"
 ```
+
+## Running the tests
+
+```bash
+./gradlew test
+```
+
+The tests cover the `EmailService` jobs and the app behavior: the recurring `weekly-digest` job is registered on startup, `POST /subscribe` enqueues the confirmation email, and `POST /confirm` schedules the delayed welcome email.
 
 ## How it works
 

@@ -12,6 +12,14 @@ Example projects showing how to integrate [JobRunr](https://www.jobrunr.io) back
 
 See each project's README for setup instructions.
 
+## Tests
+
+Each project includes tests using the [JobRunr test fixtures](https://www.jobrunr.io/en/documentation/testing) (`org.jobrunr:jobrunr:...:test-fixtures`). Run them with the Gradle wrapper:
+
+```bash
+cd java-app && ./gradlew test
+```
+
 ## Further reading
 
 - [JobRunr documentation](https://www.jobrunr.io/en/documentation/)
