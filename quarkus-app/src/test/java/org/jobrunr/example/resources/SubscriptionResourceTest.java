@@ -1,11 +1,9 @@
-package org.jobrunr.example;
+package org.jobrunr.example.resources;
 
-import io.micronaut.context.annotation.Property;
-import io.micronaut.http.HttpRequest;
-import io.micronaut.http.HttpResponse;
-import io.micronaut.http.client.HttpClient;
-import io.micronaut.http.client.annotation.Client;
-import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.junit.QuarkusTestProfile;
+import io.quarkus.test.junit.TestProfile;
+import io.restassured.RestAssured;
 import jakarta.inject.Inject;
 import org.jobrunr.example.services.EmailService;
 import org.jobrunr.jobs.Job;
@@ -14,21 +12,27 @@ import org.jobrunr.jobs.RecurringJob;
 import org.jobrunr.storage.StorageProvider;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.util.Map;
+
 import static org.jobrunr.jobs.JobAssert.assertThat;
 import static org.jobrunr.jobs.RecurringJobAssert.assertThat;
 
-@MicronautTest
-@Property(name = "jobrunr.background-job-server.enabled", value = "false")
-@Property(name = "jobrunr.dashboard.enabled", value = "false")
-class MicronautAppTest {
+@QuarkusTest
+@TestProfile(SubscriptionResourceTest.SubscriptionResourceTestProfile.class)
+class SubscriptionResourceTest {
 
     @Inject
     StorageProvider storageProvider;
 
-    @Inject
-    @Client("/")
-    HttpClient client;
+    public static class SubscriptionResourceTestProfile implements QuarkusTestProfile {
+        @Override
+        public Map<String, String> getConfigOverrides() {
+            return Map.of(
+                    "quarkus.jobrunr.background-job-server.enabled", "false",
+                    "quarkus.jobrunr.dashboard.enabled", "false"
+            );
+        }
+    }
 
     @Test
     void recurringJobIsCreatedAfterStartup() {
@@ -48,10 +52,14 @@ class MicronautAppTest {
     void subscribeEndpointEnqueuesConfirmationEmail() {
         String email = "alice@example.com";
 
-        HttpResponse<String> response = post("/subscribe?email=" + email);
+        String body = RestAssured.given()
+                .queryParam("email", email)
+                .when().post("/subscribe")
+                .then()
+                .statusCode(202)
+                .extract().body().asString();
 
-        assertThat(response.getStatus().getCode()).isEqualTo(202);
-        Job job = storageProvider.getJobById(jobIdFrom(response));
+        Job job = storageProvider.getJobById(jobIdFrom(body));
         assertThat(job)
                 .hasJobDetails(EmailService.class, "sendConfirmation", email);
     }
@@ -60,20 +68,19 @@ class MicronautAppTest {
     void confirmEndpointSchedulesWelcomeEmail() {
         String email = "bob@example.com";
 
-        HttpResponse<String> response = post("/confirm?email=" + email);
+        String body = RestAssured.given()
+                .queryParam("email", email)
+                .when().post("/confirm")
+                .then()
+                .statusCode(202)
+                .extract().body().asString();
 
-        assertThat(response.getStatus().getCode()).isEqualTo(202);
-        Job job = storageProvider.getJobById(jobIdFrom(response));
+        Job job = storageProvider.getJobById(jobIdFrom(body));
         assertThat(job)
                 .hasJobDetails(EmailService.class, "sendWelcome", email);
     }
 
-    private HttpResponse<String> post(String path) {
-        return client.toBlocking().exchange(HttpRequest.POST(path, null), String.class);
-    }
-
-    private static JobId jobIdFrom(HttpResponse<String> response) {
-        String body = response.body();
+    private static JobId jobIdFrom(String body) {
         int index = body.lastIndexOf("job id ");
         if (index < 0) {
             throw new AssertionError("No job id in response: " + body);

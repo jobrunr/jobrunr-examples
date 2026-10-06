@@ -25,9 +25,10 @@ dependencies {
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("org.yaml:snakeyaml")
 
-    testImplementation("io.micronaut:micronaut-http-client")
+    testImplementation("org.jobrunr:jobrunr:9.0.0:test-fixtures")
 
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation("io.micronaut:micronaut-http-client")
+    testImplementation("org.assertj:assertj-core:3.27.7")
 }
 
 

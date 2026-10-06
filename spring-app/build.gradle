@@ -22,8 +22,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webmvc'
     implementation 'org.jobrunr:jobrunr-spring-boot-4-starter:9.0.0'
 
+    testImplementation 'org.jobrunr:jobrunr:9.0.0:test-fixtures'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {

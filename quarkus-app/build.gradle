@@ -13,8 +13,12 @@ dependencies {
     implementation 'io.quarkus:quarkus-rest-jackson'
     implementation 'io.quarkus:quarkus-arc'
     implementation 'org.jobrunr:quarkus-jobrunr:9.0.0'
+
+    testImplementation 'org.jobrunr:jobrunr:9.0.0:test-fixtures'
+
     testImplementation 'io.quarkus:quarkus-junit'
     testImplementation 'io.rest-assured:rest-assured'
+    testImplementation 'org.assertj:assertj-core:3.27.7'
 }
 
 group = 'org.jobrunr'
